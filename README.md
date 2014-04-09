@@ -1,5 +1,10 @@
 ##About
 
+**A classic password visualization concept, ported to Android**
+
+![CHChromaHashView](https://raw.githubusercontent.com/MichaelEvans/ChromaHashView/master/img/demo.gif)
+
+
 > Chroma-Hash is a concept for visualizing secure text input using ambient color bars
 >
 > Password entry can be frustrating, especially with long or difficult passwords. Secure fields obscure your input with •'s, so others can't read it. Unfortunately, neither can you—you can't tell if you got your password right until you tap "Log In".
