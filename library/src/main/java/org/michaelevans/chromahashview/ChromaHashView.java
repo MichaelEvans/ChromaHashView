@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.EditText;
 
 import java.nio.charset.Charset;
@@ -17,7 +18,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * @author Michael Evans <michaelcevans10@gmail.com>
  */
-public class ChromaHashView extends EditText{
+public class ChromaHashView extends EditText {
     private static int DEFAULT_NUM_OF_VALUES = 3;
     private static int MINIMUM_CHARACTER_THRESHOLD = 6;
 
@@ -41,19 +42,24 @@ public class ChromaHashView extends EditText{
     }
 
     private void init() {
-        try { md5 = MessageDigest.getInstance("MD5"); } catch( NoSuchAlgorithmException nsaex ) {}
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException nsaex) {
+        }
         setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
                 String text = s.toString();
-                if(s.length() >= MINIMUM_CHARACTER_THRESHOLD) {
+                if(s.length() > 0) {
                     md5.reset();
                     md5.update((text).getBytes(Charset.forName("UTF-8")));
                     byte[] result = md5.digest();
@@ -65,6 +71,11 @@ public class ChromaHashView extends EditText{
                     String md5hash = hexString.toString();
 
                     colors = new String[]{md5hash.substring(0, 6), md5hash.substring(6, 12), md5hash.substring(12, 18), md5hash.substring(18, 24), md5hash.substring(24, 30)};
+                    if (s.length() < MINIMUM_CHARACTER_THRESHOLD) {
+                        for (int i = 0; i < colors.length; i++) {
+                            colors[i] = colorToGreyScale(colors[i]);
+                        }
+                    }
                 }else{
                     colors = null;
                 }
@@ -72,13 +83,18 @@ public class ChromaHashView extends EditText{
         });
     }
 
+    private String colorToGreyScale(String color) {
+        String r = color.substring(0, 2);
+        return r + r + r;
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
-        if(colors != null) {
-            setPadding(getPaddingLeft(),getPaddingTop(), (10 * DEFAULT_NUM_OF_VALUES + 30) ,getPaddingBottom());
+        if (colors != null) {
+            setPadding(getPaddingLeft(), getPaddingTop(), (20 * DEFAULT_NUM_OF_VALUES + 30), getPaddingBottom());
             for (int i = 0; i < DEFAULT_NUM_OF_VALUES; i++) {
-                paint.setColor(Color.parseColor("#"+colors[i]));
-                canvas.drawRect(getWidth() + getScrollX() - 10 * i - 30, 15, getWidth() + getScrollX() - 10 * i - 20, getHeight() - 15, paint);
+                paint.setColor(Color.parseColor("#" + colors[i]));
+                canvas.drawRect(getWidth() + getScrollX() - 20 * i - 35, 15, getWidth() + getScrollX() - 20 * i - 15, getHeight() - 15, paint);
             }
         }
         super.onDraw(canvas);

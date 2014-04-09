@@ -20,6 +20,4 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'commons-codec:commons-codec:1.9'
-
 }

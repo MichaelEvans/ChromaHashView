@@ -16,17 +16,9 @@
 
     <org.michaelevans.chromahashview.ChromaHashView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_height="wrap_content"/>
 
     <org.michaelevans.chromahashview.ChromaHashView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:text="@string/hello_world" />
+        android:layout_height="wrap_content"/>
 </LinearLayout>
