@@ -15,6 +15,10 @@
 
 ##Usage
 
+ChromaHashView is a drop in replacement for an EditText for password input. 
+
+Right now you need to import the library to your project, but it will be uploaded to Maven Central shortly.
+
 ##License
 
 ```
