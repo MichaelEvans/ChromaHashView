@@ -61,7 +61,7 @@ public class ChromaHashView extends EditText {
                 String text = s.toString();
                 if(s.length() > 0) {
                     md5.reset();
-                    md5.update((text).getBytes(Charset.forName("UTF-8")));
+                    md5.update(text.getBytes());
                     byte[] result = md5.digest();
                     StringBuilder hexString = new StringBuilder();
                     for (byte aResult : result) {
