@@ -1,14 +1,16 @@
 apply plugin: 'android-library'
+apply plugin: 'maven'
+
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.3"
+    buildToolsVersion "19.1.0"
 
     defaultConfig {
         minSdkVersion 5
         targetSdkVersion 19
         versionCode 1
-        versionName "1.0"
+        versionName version
     }
     buildTypes {
         release {
@@ -18,6 +20,54 @@ android {
     }
 }
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+// Publish to maven repository
+
+task sourcesJar(type: Jar) {
+    classifier 'sources'
+        from android.sourceSets.main.java.sourceFiles
+}
+
+artifacts {
+    archives sourcesJar
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+
+            repository(url: "${bintray_api_base_url}/maven/${bintray_username}/${bintray_repo}/${bintray_package}") {
+                authentication(userName: bintray_username, password: bintray_api_key)
+            }
+            pom.project {
+                artifactId 'ChromeHashView'
+                    name 'ChromeHashView'
+                    packaging 'jar'
+                    description 'Chroma-Hash is a concept for visualizing secure text input using ambient color bars concept. This library is the Android port'
+                    url 'https://github.com/MichaelEvans/ChromaHashView'
+                    inceptionYear 2014
+
+                    scm {
+                        url 'git@github.com:MichaelEvans/ChromaHashView.git'
+                        connection 'git@github.com:MichaelEvans/ChromaHashView.git'
+                        developerConnection 'git@github.com:MichaelEvans/ChromaHashView.git'
+                    }
+
+                licenses {
+                    license {
+                        name 'Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'MichaelEvans'
+                        name 'Michael Evans'
+                        email ''
+                    }
+                }
+            }
+        }
+    }
 }

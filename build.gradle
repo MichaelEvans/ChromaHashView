@@ -5,12 +5,17 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.+'
+        classpath 'com.android.tools.build:gradle:0.12.+'
     }
 }
 
 allprojects {
     repositories {
         mavenCentral()
+    }
+
+    allprojects {
+        group =  'org.michaelevans.chromahashview'
+        version = '0.1'
     }
 }

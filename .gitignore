@@ -6,5 +6,6 @@ build
 # IntelliJ IDEA
 .idea
 *.iml
+gradle.properties
 
 .DS_Store
